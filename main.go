@@ -97,6 +97,7 @@ func main() {
 
 	if reportUrl != "" {
 		log.Println("Report URL: ", reportUrl)
+		log.Println("Execute session with create session and generate test run is successful")
 	}
 	//
 	// --- Step Outputs: Export Environment Variables for other Steps:
