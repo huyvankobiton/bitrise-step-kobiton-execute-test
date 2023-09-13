@@ -17,7 +17,6 @@ var jobId = ""
 var reportUrl = ""
 
 func main() {
-
 	stepConfig := new(model.StepConfig)
 	stepConfig.Init()
 
