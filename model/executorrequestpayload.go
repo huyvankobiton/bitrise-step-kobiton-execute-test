@@ -6,7 +6,7 @@ type DesiredCaps struct {
 	DeviceName      string `json:"deviceName,omitempty"`
 	PlatformVersion string `json:"platformVersion,omitempty"`
 	PlatformName    string `json:"platformName,omitempty"`
-	AppId           string `json:"appId,omitempty"`
+	App             string `json:"app,omitempty"`
 }
 
 type TestConfig struct {
@@ -57,7 +57,7 @@ func BuildExecutorRequestPayload(e *ExecutorRequestPayload, s *StepConfig) {
 		e.DesiredCaps.DeviceName = s.deviceName
 		e.DesiredCaps.PlatformName = s.devicePlatformName
 		e.DesiredCaps.PlatformVersion = s.devicePlatformVersion
-		e.DesiredCaps.AppId = s.kobiAppId
+		e.DesiredCaps.App = s.app
 	}
 
 	// Scriptless

@@ -14,7 +14,7 @@ type StepConfig struct {
 	gitRepoUrl            string
 	gitRepoBranch         string
 	gitSSHKey             string
-	kobiAppId             string
+	app                   string
 	useCustomDevice       bool
 	deviceName            string
 	devicePlatformVersion string
@@ -38,7 +38,7 @@ func (stepConfig *StepConfig) Init() {
 	stepConfig.gitRepoUrl = os.Getenv("git_repo_url_input")
 	stepConfig.gitRepoBranch = os.Getenv("git_repo_branch_input")
 	stepConfig.gitSSHKey = os.Getenv("git_repo_ssh_key_input")
-	stepConfig.kobiAppId = os.Getenv("app_id_input")
+	stepConfig.app = os.Getenv("app_input")
 	stepConfig.useCustomDevice, _ = strconv.ParseBool(os.Getenv("use_custom_device_input"))
 	stepConfig.deviceName = os.Getenv("device_name_input")
 	stepConfig.devicePlatformVersion = os.Getenv("device_platform_version_input")
@@ -92,8 +92,8 @@ func (stepConfig *StepConfig) GetGitSSHKey() string {
 	return stepConfig.gitSSHKey
 }
 
-func (stepConfig *StepConfig) GetKobiAppId() string {
-	return stepConfig.kobiAppId
+func (stepConfig *StepConfig) GetApp() string {
+	return stepConfig.app
 }
 
 func (stepConfig *StepConfig) IsUseCustomDevices() bool {
