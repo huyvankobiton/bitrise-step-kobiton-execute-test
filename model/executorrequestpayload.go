@@ -23,7 +23,7 @@ type BitriseConfig struct {
 
 type ScriptlessConfig struct {
 	ScriptlessAutomation bool   `json:"scriptlessAutomation,omitempty"`
-	ScriptlessTimeout    int    `json:"scriptlessTimeout,omitempty"`
+	ScriptlessTimeout    int64  `json:"scriptlessTimeout,omitempty"`
 	DeviceBundle         string `json:"deviceBundle,omitempty"`
 }
 
