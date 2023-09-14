@@ -21,10 +21,17 @@ type BitriseConfig struct {
 	ReleaseId string `json:"releaseId"`
 }
 
+type ScriptlessConfig struct {
+	ScriptlessAutomation bool   `json:"scriptlessAutomation,omitempty"`
+	ScriptlessTimeout    int    `json:"scriptlessTimeout,omitempty"`
+	DeviceBundle         string `json:"deviceBundle,omitempty"`
+}
+
 type ExecutorRequestPayload struct {
-	DesiredCaps DesiredCaps   `json:"desiredCaps,omitempty"`
-	TestConfig  TestConfig    `json:"testConfig"`
-	AzureConfig BitriseConfig `json:"azureConfig"`
+	DesiredCaps      DesiredCaps      `json:"desiredCaps,omitempty"`
+	TestConfig       TestConfig       `json:"testConfig"`
+	AzureConfig      BitriseConfig    `json:"azureConfig"`
+	ScriptlessConfig ScriptlessConfig `json:"scriptlessConfig"`
 }
 
 type JobResponse struct {
@@ -46,6 +53,13 @@ func BuildExecutorRequestPayload(e *ExecutorRequestPayload, s *StepConfig) {
 		e.DesiredCaps.PlatformName = s.devicePlatformName
 		e.DesiredCaps.PlatformVersion = s.devicePlatformVersion
 		e.DesiredCaps.AppId = s.kobiAppId
+	}
+
+	// Scriptless
+	if s.scriptlessAutomation {
+		e.ScriptlessConfig.ScriptlessAutomation = s.scriptlessAutomation
+		e.ScriptlessConfig.ScriptlessTimeout = s.scriptlessTimeout
+		e.ScriptlessConfig.DeviceBundle = s.deviceBundle
 	}
 
 	// BitriseConfig

@@ -23,6 +23,9 @@ type StepConfig struct {
 	commands              string
 	waitForExecution      bool
 	logType               string
+	scriptlessAutomation  bool
+	deviceBundle          string
+	scriptlessTimeout     int
 }
 
 func (stepConfig *StepConfig) Init() {
@@ -43,6 +46,9 @@ func (stepConfig *StepConfig) Init() {
 	stepConfig.rootDirectory = os.Getenv("root_directory_input")
 	stepConfig.commands = os.Getenv("command_input")
 	stepConfig.waitForExecution, _ = strconv.ParseBool(os.Getenv("wait_for_execution_input"))
+	stepConfig.scriptlessAutomation, _ = strconv.ParseBool(os.Getenv("scriptless_automation"))
+	stepConfig.deviceBundle = os.Getenv("device_bundle")
+	stepConfig.scriptlessTimeout, _ = strconv.Atoi(os.Getenv("scriptless_timeout"))
 
 	switch os.Getenv("log_type_input") {
 	case "output":
@@ -120,4 +126,16 @@ func (stepConfig *StepConfig) IsWaitForExecution() bool {
 
 func (stepConfig *StepConfig) GetLogType() string {
 	return stepConfig.logType
+}
+
+func (stepConfig *StepConfig) GetScriptlessAutomation() bool {
+	return stepConfig.scriptlessAutomation
+}
+
+func (stepConfig *StepConfig) GetScriptlessTimeout() int {
+	return stepConfig.scriptlessTimeout
+}
+
+func (stepConfig *StepConfig) GetDeviceBundle() string {
+	return stepConfig.deviceBundle
 }
