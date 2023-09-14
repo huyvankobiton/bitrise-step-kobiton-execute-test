@@ -39,6 +39,11 @@ type JobResponse struct {
 	Status string `json:"status"`
 }
 
+type ScriptlessStatusResponse struct {
+	Status   string   `json:"status"`
+	Messages []string `json:"messages"`
+}
+
 func BuildExecutorRequestPayload(e *ExecutorRequestPayload, s *StepConfig) {
 	// TestConfig
 	e.TestConfig.Git = s.gitRepoUrl
