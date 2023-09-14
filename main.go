@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/kobiton/bitrise-step-kobiton-execute-test/model"
-	"github.com/kobiton/bitrise-step-kobiton-execute-test/utils"
+	"github.com/huyvankobiton/bitrise-step-kobiton-execute-test/model"
+	"github.com/huyvankobiton/bitrise-step-kobiton-execute-test/utils"
 	"log"
 	"os"
 	"strings"
