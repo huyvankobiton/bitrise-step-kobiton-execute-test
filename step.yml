@@ -150,7 +150,7 @@ inputs:
   - scriptless_automation: "false"
     opts:
       category: Scriptless Automation
-      title: "Trigger Scriptless on multiple devices"
+      title: "Trigger Scriptless on multiple devices"
       summary: Check whether you wish to initiate Scriptless execution of your test case across multiple devices by specifying a particular device bundle.
       is_expand: true
       value_options:
