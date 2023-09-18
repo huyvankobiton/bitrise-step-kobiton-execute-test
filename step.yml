@@ -165,7 +165,7 @@ inputs:
 
   - scriptless_timeout:
     opts:
-      category: Scriptless Timeout
+      category: Scriptless Automation
       title: "Kobiton Scriptless Timeout"
       summary: Specify the Kobiton Timeout in seconds.
       is_expand: true
