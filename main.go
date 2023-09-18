@@ -118,10 +118,9 @@ func runScriptless(stepConfig *model.StepConfig) {
 	log.Println("Check scriptless status...")
 
 	var isTimeout = false
-	var scriptlessResponse model.ScriptlessStatusResponse
+	var scriptlessResponse *model.ScriptlessStatusResponse
 	var waitingBeginAt = time.Now().UnixNano() / int64(time.Millisecond)
-	var jobUrl = stepConfig.GetExecutorUrl() + "/jobs/" + jobId
-	var statusUrl = jobUrl + "/scriptless/status"
+	var statusUrl = stepConfig.GetExecutorUrl() + "/jobs/" + jobId + "/scriptless/status"
 	scriptlessTicker := time.NewTicker(30 * time.Second)
 	client := utils.HttpClient()
 	var headers = getRequestHeader(stepConfig)
@@ -152,15 +151,25 @@ func runScriptless(stepConfig *model.StepConfig) {
 	if isTimeout {
 		log.Println("Scriptless is timeout")
 	} else {
-		log.Println("Scriptless is completed, copy report to bitrise")
-		fileUrl := jobUrl + "/"
-		var reportFilePath = os.Getenv("BITRISE_DEPLOY_DIR") + "/scriptless-report.html"
-		err := DownloadFile(reportFilePath, fileUrl)
-		if err == nil {
-			log.Println("Scriptless report is available at: " + reportFilePath)
+		var error string
+		if scriptlessResponse == nil {
+			log.Println("Scriptless is completed with no error")
 		} else {
-			log.Println("Upload report failed")
-			log.Println(err)
+			error = scriptlessResponse.Error
+			log.Println("Scriptless is completed with error: " + error)
+		}
+
+		if error == "" {
+			fileUrl := stepConfig.GetExecutorUrl() + "/" + jobId + "/scriptless-report.html"
+			println("Start downloading scriptless report from URL: " + fileUrl)
+			var reportFilePath = os.Getenv("BITRISE_DEPLOY_DIR") + "/scriptless-report.html"
+			downloadError := DownloadFile(reportFilePath, fileUrl)
+			if downloadError == nil {
+				log.Println("Scriptless report is available at: " + reportFilePath)
+			} else {
+				log.Println("Upload report failed with error:")
+				log.Println(downloadError)
+			}
 		}
 	}
 }
