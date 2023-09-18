@@ -6,7 +6,7 @@ type DesiredCaps struct {
 	DeviceName      string `json:"deviceName,omitempty"`
 	PlatformVersion string `json:"platformVersion,omitempty"`
 	PlatformName    string `json:"platformName,omitempty"`
-	App             string `json:"app,omitempty"`
+	AppId           string `json:"appId,omitempty"`
 }
 
 type TestConfig struct {
@@ -21,28 +21,15 @@ type BitriseConfig struct {
 	ReleaseId string `json:"releaseId"`
 }
 
-type ScriptlessConfig struct {
-	ScriptlessAutomation bool   `json:"scriptlessAutomation,omitempty"`
-	ScriptlessTimeout    int64  `json:"scriptlessTimeout,omitempty"`
-	DeviceBundle         string `json:"deviceBundle,omitempty"`
-}
-
 type ExecutorRequestPayload struct {
-	DesiredCaps      DesiredCaps      `json:"desiredCaps,omitempty"`
-	TestConfig       TestConfig       `json:"testConfig"`
-	AzureConfig      BitriseConfig    `json:"azureConfig"`
-	ScriptlessConfig ScriptlessConfig `json:"scriptlessConfig"`
+	DesiredCaps DesiredCaps   `json:"desiredCaps,omitempty"`
+	TestConfig  TestConfig    `json:"testConfig"`
+	AzureConfig BitriseConfig `json:"azureConfig"`
 }
 
 type JobResponse struct {
 	ID     string `json:"id"`
 	Status string `json:"status"`
-}
-
-type ScriptlessStatusResponse struct {
-	Status   string   `json:"status"`
-	Error    string   `json:"error"`
-	Messages []string `json:"messages"`
 }
 
 func BuildExecutorRequestPayload(e *ExecutorRequestPayload, s *StepConfig) {
@@ -58,14 +45,7 @@ func BuildExecutorRequestPayload(e *ExecutorRequestPayload, s *StepConfig) {
 		e.DesiredCaps.DeviceName = s.deviceName
 		e.DesiredCaps.PlatformName = s.devicePlatformName
 		e.DesiredCaps.PlatformVersion = s.devicePlatformVersion
-		e.DesiredCaps.App = s.app
-	}
-
-	// Scriptless
-	if s.scriptlessAutomation {
-		e.ScriptlessConfig.ScriptlessAutomation = s.scriptlessAutomation
-		e.ScriptlessConfig.ScriptlessTimeout = s.scriptlessTimeout
-		e.ScriptlessConfig.DeviceBundle = s.deviceBundle
+		e.DesiredCaps.AppId = s.kobiAppId
 	}
 
 	// BitriseConfig
