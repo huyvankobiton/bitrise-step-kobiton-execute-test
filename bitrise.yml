@@ -50,6 +50,7 @@ workflows:
         - kobi_apikey_input: "$KOB_APIKEY_PROD"
         - executor_password_input: "$EXECUTOR_PASSWORD"
         - kobi_username_input: thuongdo3
+        - scriptless_automation: false
     - script:
         inputs:
         - content: |
