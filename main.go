@@ -120,7 +120,8 @@ func runScriptless(stepConfig *model.StepConfig) {
 	var isTimeout = false
 	var scriptlessResponse model.ScriptlessStatusResponse
 	var waitingBeginAt = time.Now().UnixNano() / int64(time.Millisecond)
-	var statusUrl = stepConfig.GetExecutorUrl() + "/jobs/" + jobId + "/scriptless/status"
+	var jobUrl = stepConfig.GetExecutorUrl() + "/jobs/" + jobId
+	var statusUrl = jobUrl + "/scriptless/status"
 	scriptlessTicker := time.NewTicker(30 * time.Second)
 	client := utils.HttpClient()
 	var headers = getRequestHeader(stepConfig)
@@ -152,10 +153,11 @@ func runScriptless(stepConfig *model.StepConfig) {
 		log.Println("Scriptless is timeout")
 	} else {
 		log.Println("Scriptless is completed, copy report to bitrise")
-		fileUrl := "https://golangcode.com/logo.svg"
-		err := DownloadFile(os.Getenv("BITRISE_DEPLOY_DIR")+"/scriptless-report.html", fileUrl)
+		fileUrl := jobUrl + "/"
+		var reportFilePath = os.Getenv("BITRISE_DEPLOY_DIR") + "/scriptless-report.html"
+		err := DownloadFile(reportFilePath, fileUrl)
 		if err == nil {
-			log.Println("Upload report success")
+			log.Println("Scriptless report is available at: " + reportFilePath)
 		} else {
 			log.Println("Upload report failed")
 			log.Println(err)
@@ -197,6 +199,7 @@ func DownloadFile(filepath string, url string) error {
 }
 
 func setEnv() {
+	os.Setenv("BITRISE_DEPLOY_DIR", "/Users/chuong.nguyen/pj/kobiton/bitrise-step-kobiton-execute-test/report")
 	os.Setenv("kobi_username_input", "chuong777")
 	os.Setenv("kobi_apikey_input", "26ae5857-d639-4b4b-bbea-eb700eb20417")
 	os.Setenv("executor_url_input", "http://localhost:4545")
