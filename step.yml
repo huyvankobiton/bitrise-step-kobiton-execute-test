@@ -111,7 +111,7 @@ inputs:
       is_expand: true
       is_required: false
       is_sensitive: true
-  - app_id_input:
+  - app_input:
     opts:
       title: "App"
       summary: The App Path or App URL to use in your test script.
