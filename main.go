@@ -18,7 +18,6 @@ var jobId = ""
 var reportUrl = ""
 
 func main() {
-	setEnv()
 	stepConfig := new(model.StepConfig)
 	stepConfig.Init()
 	log.Println("nhc step v2")
